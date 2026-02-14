@@ -20,8 +20,7 @@ mv ./audio_speech_actors_01-24/*/* ./audio_files/
 
 If successful, there will be 1440 wave files in the `audio_files` directory.
 
-After that, there is a file called `metadata_creation.py`. Although there is a `metadata.csv`, the python file is included in case some features are needed. In that case, the python file can be modified minimally to extract
-additional metadata.
+After that, there is a file called `metadata_creation.py`. Although there is a `metadata.csv`, the python file is included so that if some extra features are needed, in which case, the python file can be modified minimally to extract additional metadata.
 
 ### 2. Installing Python Dependencies
 
