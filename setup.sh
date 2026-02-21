@@ -7,4 +7,4 @@ curl -L -o $ZIP_FILE https://www.kaggle.com/api/v1/datasets/download/uwrfkaggler
 mkdir $DIR
 unzip $ZIP_FILE
 mv ./audio_speech_actors_01-24/*/* ./audio_files/
-rm -r Actor* /audio_speech_actors_01-24
+rm -r ./Actor* ./audio_speech_actors_01-24
