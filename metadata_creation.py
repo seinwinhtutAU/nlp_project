@@ -1,10 +1,19 @@
-import csv,os
+import csv, os, wave, contextlib
 from pathlib import Path
+
+
+def get_duration_wave(file_path):
+    with contextlib.closing(wave.open(file_path,'r')) as f:
+        frames = f.getnframes()
+        rate = f.getframerate()
+        duration = frames / float(rate)
+        return duration
+
 
 dir = "audio_files"
 
 
-header_row = ["file_name","emotion","intensity","gender","statement"]
+header_row = ["file_name","emotion","intensity","gender","statement","duration"]
 
 emotions = {
     "01": "neutral",
@@ -43,8 +52,9 @@ with open("metadata.csv","w",newline="") as f:
                 gender = "female"
             else:
                 gender = "male"
+            duration = get_duration_wave(f"audio_files/{f}")
             
-            rows.append([filename,emotion,intensity,gender,statement])
+            rows.append([filename,emotion,intensity,gender,statement,duration])
     
     csv_writer.writerows(rows)
             
