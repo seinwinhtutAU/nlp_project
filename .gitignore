@@ -1,5 +1,6 @@
-./DS_Store
+.DS_Store
 ./MACOSX
 *.zip
 /audio_files
 */*.wav
+ESC-50

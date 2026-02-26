@@ -28,9 +28,16 @@ esc50 = "ESC-50/audio"
 esc50_meta = "ESC-50/meta/esc50.csv"
 sample_rate = 22050
 times = 4
+
+
 audio_files_meta = "metadata.csv"
 
 df = pd.read_csv(audio_files_meta)
+
+df = df[df["emotion"] != "neutral"]
+samples = df.shape[0]
+final = samples * times
+print(f"Total original files: {samples}, Total final augmented files: {final}")
 
 seed = 42
 
@@ -60,6 +67,7 @@ for group, categories in esc50_categories.items():
 
 new_rows = []
 
+count = 0 
 
 for _, row in df.iterrows():
     src_path = os.path.join(in_dir, row["file_name"] + ".wav")
@@ -76,6 +84,10 @@ for _, row in df.iterrows():
         sf.write(os.path.join(out_dir, new_fname), y_aug, sample_rate)
 
         new_rows.append({**row.to_dict(), "file_name": new_fname, "augmentation": group})
+        count += 1
+        progress = int(count*100/final)
+        if progress%25 == 0:
+            print(f"Completed {count} files. {progress}% done.")
 
 aug_df = pd.DataFrame(new_rows)
 df["augmentation"] = "original"
