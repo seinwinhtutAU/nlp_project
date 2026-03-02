@@ -11,6 +11,7 @@ else
     unzip $ZIP_FILE
     mv ./audio_speech_actors_01-24/*/* ./audio_files/
     rm -r ./Actor* ./audio_speech_actors_01-24
+    rm $ZIP_FILE
 fi
 
 git clone https://github.com/karolpiczak/ESC-50.git
