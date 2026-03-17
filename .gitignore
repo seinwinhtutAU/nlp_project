@@ -7,6 +7,7 @@ ESC-50
 */*.m4a
 /test_file
 /augmented_audio
+*.*env*
 
 # Airflow runtime files — never commit these
 airflow/logs/

@@ -1,0 +1,6 @@
+,AudioID,Emotion,Intensity,Gender
+0,1,Angry,Strong,Male
+1,2,Calm,Normal,Male
+2,3,Disgust,Normal,Female
+3,4,Happy,Strong,Female
+4,5,Sad,Normal,Female

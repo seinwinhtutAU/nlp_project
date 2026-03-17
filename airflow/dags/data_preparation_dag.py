@@ -26,6 +26,59 @@ def get_duration_wave(file_path: Path) -> float:
         return frames / float(rate)
 
 
+def download_ravdess_dataset() -> None:
+    import glob
+    import shutil
+    import subprocess
+
+    audio_dir = REPO_ROOT / "audio_files"
+    zip_file = REPO_ROOT / "ravdess-audio.zip"
+
+    if audio_dir.is_dir() and any(audio_dir.iterdir()):
+        print("audio_files already exists and has files, skipping download.")
+        return
+
+    subprocess.run(
+        [
+            "curl",
+            "-L",
+            "-o",
+            str(zip_file),
+            "https://www.kaggle.com/api/v1/datasets/download/uwrfkaggler/ravdess-emotional-speech-audio",
+        ],
+        check=True,
+    )
+    audio_dir.mkdir(parents=True, exist_ok=True)
+    subprocess.run(["unzip", str(zip_file), "-d", str(REPO_ROOT)], check=True)
+
+    for wav_file in glob.glob(str(REPO_ROOT / "audio_speech_actors_01-24" / "*" / "*")):
+        shutil.move(wav_file, str(audio_dir))
+
+    for actor_dir in glob.glob(str(REPO_ROOT / "Actor_*")):
+        shutil.rmtree(actor_dir)
+    extracted_dir = REPO_ROOT / "audio_speech_actors_01-24"
+    if extracted_dir.exists():
+        shutil.rmtree(extracted_dir)
+    zip_file.unlink(missing_ok=True)
+
+    print(f"Downloaded and extracted RAVDESS dataset to {audio_dir}")
+
+
+def clone_esc50_repo() -> None:
+    import subprocess
+
+    esc50_dir = REPO_ROOT / "ESC-50"
+    if esc50_dir.is_dir():
+        print("ESC-50 already exists, skipping clone.")
+        return
+
+    subprocess.run(
+        ["git", "clone", "https://github.com/karolpiczak/ESC-50.git", str(esc50_dir)],
+        check=True,
+    )
+    print(f"Cloned ESC-50 to {esc50_dir}")
+
+
 def run_metadata_creation() -> None:
     audio_dir = REPO_ROOT / "audio_files"
     output_csv = REPO_ROOT / "metadata.csv"
@@ -140,12 +193,12 @@ def run_audio_augmentation() -> None:
     }
 
     snr_map = {
-        "crowd": 15,
-        "traffic": 10,
-        "rain": 15,
-        "wind": 10,
-        "keyboard": 15,
-        "indoor": 15,
+        "crowd": 10,
+        "traffic": 5,
+        "rain": 5,
+        "wind": 5,
+        "keyboard": 5,
+        "indoor": 5,
     }
 
     meta = pd.read_csv(esc50_meta)
@@ -204,6 +257,16 @@ with DAG(
     catchup=False,
     tags=["data-prep", "ml-training"],
 ) as dag:
+    download_ravdess_task = PythonOperator(
+        task_id="download_ravdess_dataset",
+        python_callable=download_ravdess_dataset,
+    )
+
+    clone_esc50_task = PythonOperator(
+        task_id="clone_esc50_repo",
+        python_callable=clone_esc50_repo,
+    )
+
     metadata_creation_task = PythonOperator(
         task_id="create_metadata_csv",
         python_callable=run_metadata_creation,
@@ -214,4 +277,4 @@ with DAG(
         python_callable=run_audio_augmentation,
     )
 
-    metadata_creation_task >> audio_augmentation_task
+    [download_ravdess_task, clone_esc50_task] >> metadata_creation_task >> audio_augmentation_task
