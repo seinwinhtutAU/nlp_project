@@ -4,3 +4,6 @@
 /audio_files
 */*.wav
 ESC-50
+*/*.m4a
+/test_file
+/augmented_audio
