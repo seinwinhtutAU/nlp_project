@@ -2,7 +2,4 @@
 ./MACOSX
 *.zip
 /audio_files
-*/*.wav
-*/*.m4a
-/test_file
 /augmented_audio
