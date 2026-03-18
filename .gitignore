@@ -25,3 +25,4 @@ dags/          ← your actual DAG Python files
 plugins/       ← custom operators/hooks
 config/        ← airflow.cfg template (secrets stripped)
 requirements.txt
+/augmented_audio
