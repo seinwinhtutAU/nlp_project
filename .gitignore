@@ -4,3 +4,29 @@
 audio_files
 audio_files_augmented
 test_file
+/audio_files
+*/*.wav
+ESC-50
+*/*.m4a
+/test_file
+/augmented_audio
+*.*env*
+
+# Airflow runtime files — never commit these
+airflow/logs/
+airflow/airflow.db
+airflow/airflow.cfg        # contains secrets/connections
+airflow/simple_auth_manager_passwords.json.generated
+airflow/.airflow_db_upgrade
+airflow/__pycache__/
+airflow/.env
+```
+
+**Do commit normally** (small text files, git handles fine):
+```
+dags/          ← your actual DAG Python files
+plugins/       ← custom operators/hooks
+config/        ← airflow.cfg template (secrets stripped)
+requirements.txt
+/augmented_audio
+test_logs

@@ -28,6 +28,14 @@ For installing Python dependencies, it is recommended to use a virtual environme
 
 Alternatively, you can use Python dependencies managers like [uv](https://github.com/astral-sh/uv) or [poetry](https://python-poetry.org/).
 
+Dependencies list (not exhaustive, check requirements.txt):
+
+1. librosa
+2. numpy
+3. pandas
+4. matplotlib
+5. jupyterlab (can skip if you have global install)
+
 ### File names explanation
 
 The filename consists of a 7-part numerical identifier (e.g., 03-01-06-01-02-01-12.wav).
