@@ -1,5 +1,6 @@
-./DS_Store
+.DS_Store
 ./MACOSX
 *.zip
-/audio_files
-/augmented_audio
+audio_files
+audio_files_augmented
+test_file
