@@ -11,6 +11,7 @@ ESC-50
 /test_file
 /augmented_audio
 *.*env*
+*/__pycache__
 
 # Airflow runtime files — never commit these
 airflow/logs/
