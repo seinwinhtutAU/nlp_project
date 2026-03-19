@@ -1,6 +1,9 @@
 .DS_Store
 ./MACOSX
 *.zip
+audio_files
+audio_files_augmented
+test_file
 /audio_files
 */*.wav
 ESC-50
