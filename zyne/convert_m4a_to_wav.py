@@ -1,6 +1,20 @@
 import os
 from pydub import AudioSegment
-test_file_dir = os.path.join(os.path.dirname(__file__), 'test_file')
+
+
+def _resolve_test_dir():
+    script_dir = os.path.dirname(__file__)
+    candidates = [
+        os.path.join(script_dir, 'test_file'),
+        os.path.join(script_dir, '..', 'test_file'),
+    ]
+    for path in candidates:
+        if os.path.exists(path):
+            return os.path.abspath(path)
+    return os.path.abspath(candidates[0])
+
+
+test_file_dir = _resolve_test_dir()
 
 def convert_m4a_to_wav(m4a_file_path, output_dir):
 
