@@ -1,9 +1,14 @@
+# La Min Oo 6540039
+# Set Kaung Lwin 6632017
+# Sein Win Htut  6611040
 import librosa
 import numpy as np
 import os
 import pandas as pd
 import soundfile as sf
 
+
+# Audio Augmentation to expand dataset
 
 def mix(speech, noise_path, snr_db):
     noise = librosa.load(noise_path, sr=sample_rate, mono=True)[0]

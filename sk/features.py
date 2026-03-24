@@ -1,7 +1,12 @@
+# La Min Oo 6540039
+# Set Kaung Lwin 6632017
+# Sein Win Htut  6611040
 import numpy as np
 import librosa
 import parselmouth
 from parselmouth.praat import call
+
+# extract audio features for SVM
 
 # because of jupyter and multiprocessing library limitation
 # this feature extraction was needed to split into another file
